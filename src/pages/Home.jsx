@@ -41,7 +41,7 @@ const Home = () => {
     <div className="relative w-full max-w-6xl mx-auto px-4 py-10">
       {/* Prev Button */}
       <button
-        className="absolute  top-1/2 left-1 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow hover:bg-gray-200 transition max-2xl:top-80 max-lg:top-70 max-md:top-55 max-sm:top-30"
+        className="absolute  top-1/2 left-1 transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow hover:bg-gray-200 transition 2xl:top-80 max-2xl:top-80 max-lg:top-70 max-md:top-55 max-sm:top-30"
         onClick={() => sliderRef.current.slickPrev()}
       >
         <GrPrevious size={20} />
@@ -68,7 +68,7 @@ const Home = () => {
 
       {/* Next Button */}
       <button
-        className="absolute right-1  transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow hover:bg-gray-200 transition max-2xl:top-80 max-lg:top-70 max-md:top-55 max-sm:top-30"
+        className="absolute right-1  transform -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow hover:bg-gray-200 transition max-2xl:top-80 2xl:top-80 max-lg:top-70 max-md:top-55 max-sm:top-30"
         onClick={() => sliderRef.current.slickNext()}
       >
         <GrNext size={20} />
