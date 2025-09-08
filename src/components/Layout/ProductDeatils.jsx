@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Redux/cartSlice.js";
 import { getSingleProduct } from "../../api/productApi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 
-// ✅ Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+
   const [product, setProduct] = useState(null);
-  const [cart, setCart] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -33,8 +35,9 @@ const ProductDetails = () => {
   }
 
   return (
-    <section className=" text-black p-6 my-5 md:p-12 border-y-2 border-gray-500">
+    <section className="text-black p-6 my-5 md:p-12 border-y-2 border-gray-500">
       <div className="mx-auto flex flex-col md:flex-row gap-20 items-center">
+        {/* Product Images Slider */}
         <div className="flex-shrink-0 w-full md:w-1/2">
           <Swiper
             spaceBetween={20}
@@ -55,8 +58,8 @@ const ProductDetails = () => {
           </Swiper>
         </div>
 
-        {/* 👇 Product Info */}
-        <div className="w-full md:w-1/2 space-y-5 text-lg">
+        {/* Product Info */}
+        <div className="w-full md:w-1/2 space-y-5 text-lg max-lg:text-base">
           <h2 className="text-3xl font-bold border-b border-gray-700 pb-3">
             {product.title}
           </h2>
@@ -75,35 +78,41 @@ const ProductDetails = () => {
           </p>
           <p>
             <span className="font-semibold text-gray-700">Weight: </span>
-            {product.weight || "N/A"}
+            {"N/A"}
           </p>
           <p>
             <span className="font-semibold text-gray-700">Warranty: </span>
-            {product.warrantyInformation}
+            {product.warrantyInformation || "Not available"}
           </p>
           <p>
             <span className="font-semibold text-gray-700">Shipping: </span>
-            {product.shippingInformation}
+            {product.shippingInformation || "Standard shipping"}
           </p>
           <p>
+            <span className="font-semibold text-gray-700">Stock: </span>
+            {product.stock || "Standard shipping"}
+          </p>
+
+          <p>
             <span className="font-semibold text-gray-700">Availability: </span>
-            {product.availabilityStatus}
+            {product.availabilityStatus || "In stock"}
           </p>
           <p>
             <span className="font-semibold text-gray-700">Return Policy: </span>
-            {product.returnPolicy}
+            {product.returnPolicy || "7-day return"}
           </p>
 
-          <div className="flex gap-10">
+          {/* Buttons */}
+          <div className="flex gap-10 max-sm:gap-4">
             <button
-              onClick={() => setCart(cart + 1)}
-              className="mt-6 px-6 py-2 bg-black hover:bg-blue-700 text-gray-200 rounded-lg shadow hover:text-white duration-400 cursor-pointer"
+              onClick={() => dispatch(addToCart(product))}
+              className="mt-6 px-6 py-2 bg-gray-700 hover:bg-black text-gray-200 rounded-lg shadow hover:text-white duration-200 cursor-pointer"
             >
               Add to Cart
             </button>
 
             <NavLink to="/product">
-              <button className="mt-6 px-6 py-2 bg-black hover:bg-blue-700 text-gray-200 rounded-lg shadow hover:text-white duration-400 cursor-pointer">
+              <button className="mt-6 px-6 py-2 bg-gray-700 hover:bg-black text-gray-200 rounded-lg shadow hover:text-white duration-200 cursor-pointer">
                 Go Back
               </button>
             </NavLink>
