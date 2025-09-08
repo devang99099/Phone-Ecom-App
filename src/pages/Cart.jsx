@@ -5,7 +5,7 @@ import {
   incrementQty,
   decrementQty,
   clearCart,
-} from "../redux/cartSlice.js";
+} from "../Redux/cartSlice.js";
 
 const CartPage = () => {
   const cart = useSelector((state) => state.cart);
