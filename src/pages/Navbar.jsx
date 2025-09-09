@@ -8,6 +8,7 @@ const Navbar = () => {
   const navItems = [
     { name: "Products", path: "/product" },
     { name: "Cart", path: "/cart" },
+    { name: "MyOrder", path: "/myorder" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
@@ -15,12 +16,10 @@ const Navbar = () => {
   return (
     <header className="bg-white shadow-md text-black sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        
         <NavLink to="/" className="text-2xl font-bold">
           E-commerce
         </NavLink>
 
-        
         <nav className="hidden md:flex gap-6">
           {navItems.map((item) => (
             <NavLink

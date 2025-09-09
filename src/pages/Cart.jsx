@@ -6,6 +6,7 @@ import {
   decrementQty,
   clearCart,
 } from "../Redux/cartSlice.js";
+import { NavLink } from "react-router-dom";
 
 const CartPage = () => {
   const cart = useSelector((state) => state.cart);
@@ -13,9 +14,19 @@ const CartPage = () => {
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+  const handleClearCart = () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to clear the cart?"
+    );
+    if (confirmed) {
+      dispatch(clearCart());
+    }
+  };
+
   return (
-    <div className="p-8">
+    <div className="p-8 relative max-w-screen-xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
+
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -29,11 +40,11 @@ const CartPage = () => {
                 <img
                   src={item.thumbnail}
                   alt={item.title}
-                  className="w-20 h-20  rounded"
+                  className="w-20 h-20 rounded"
                 />
                 <div className="space-y-1">
                   <h3 className="font-semibold">{item.title}</h3>
-                  <p>${item.price} </p>
+                  <p>${item.price}</p>
                 </div>
               </div>
 
@@ -60,7 +71,7 @@ const CartPage = () => {
                 </p>
                 <button
                   onClick={() => dispatch(removeFromCart(item.id))}
-                  className=" bg-red-500 p-2 rounded text-white cursor-pointer hover:bg-red-700 text-sm mt-1 transition-all duration-300"
+                  className="bg-red-500 p-2 rounded text-white cursor-pointer hover:bg-red-700 text-sm mt-1 transition-all duration-300"
                 >
                   Remove
                 </button>
@@ -69,13 +80,24 @@ const CartPage = () => {
           ))}
 
           <div className="mt-8 text-right">
-            <h2 className="text-xl font-bold">Total: ${total.toFixed(2)}</h2>
-            <button
-              onClick={() => dispatch(clearCart())}
-              className="mt-4 px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-            >
-              Clear Cart
-            </button>
+            <h2 className="text-xl font-bold max-sm:text-center">
+              Total: ${total.toFixed(2)}
+            </h2>
+            <div className="flex justify-end gap-4 max-sm:flex-col max-sm:items-center max-sm:gap-0">
+              <NavLink>
+                <button
+                  onClick={handleClearCart}
+                  className="mt-4 px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                  Clear Cart
+                </button>
+              </NavLink>
+              <NavLink to="/cart/buynow">
+                <button className="mt-4 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">
+                  Buy Now
+                </button>
+              </NavLink>
+            </div>
           </div>
         </div>
       )}

@@ -8,6 +8,8 @@ import Contact from "./pages/Contact";
 import ErrorPage from "./pages/ErrorPage";
 import MainLayout from "./components/Layout/MainLayout";
 import ProductDeatils from "./components/Layout/ProductDeatils";
+import BuyNow from "./pages/BuyNow";
+import MyOrder from "./pages/MyOrder";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
         element: <Product />,
       },
       {
+        path: "/myorder",
+        element: <MyOrder />,
+      },
+      {
         path: "product/:id",
         element: <ProductDeatils />,
       },
@@ -38,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/cart/buynow",
+        element: <BuyNow />,
       },
     ],
   },

@@ -15,6 +15,7 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
 
   const [product, setProduct] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -28,6 +29,12 @@ const ProductDetails = () => {
     fetchProduct();
   }, [id]);
 
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3500);
+  };
+
   if (!product) {
     return (
       <p className="text-black text-center py-10">Loading product details...</p>
@@ -35,8 +42,14 @@ const ProductDetails = () => {
   }
 
   return (
-    <section className="text-black p-6 my-5 md:p-12 border-y-2 border-gray-500">
-      <div className="mx-auto flex flex-col md:flex-row gap-20 items-center">
+    <section className="text-black p-6 my-5 lg:p-12 border-y-2 border-gray-500">
+      {showToast && (
+        <div className="fixed top-20 right-6 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 toast-animate">
+          ✅ Product added to cart!
+        </div>
+      )}
+
+      <div className="mx-auto flex flex-col md:flex-row gap-10 lg:gap-20  items-center">
         {/* Product Images Slider */}
         <div className="flex-shrink-0 w-full md:w-1/2">
           <Swiper
@@ -59,7 +72,7 @@ const ProductDetails = () => {
         </div>
 
         {/* Product Info */}
-        <div className="w-full md:w-1/2 space-y-5 text-lg max-lg:text-base">
+        <div className="w-full md:w-1/2 space-y-3 md:space-y-5 text-lg max-lg:text-base">
           <h2 className="text-3xl font-bold border-b border-gray-700 pb-3">
             {product.title}
           </h2>
@@ -103,16 +116,16 @@ const ProductDetails = () => {
           </p>
 
           {/* Buttons */}
-          <div className="flex gap-10 max-sm:gap-4">
+          <div className="flex gap-10 max-sm:gap-4 ">
             <button
-              onClick={() => dispatch(addToCart(product))}
-              className="mt-6 px-6 py-2 bg-gray-700 hover:bg-black text-gray-200 rounded-lg shadow hover:text-white duration-200 cursor-pointer"
+              onClick={handleAddToCart}
+              className="md:mt-6 px-6 py-2 bg-gray-700 hover:bg-black text-gray-200 rounded-lg shadow hover:text-white duration-200 cursor-pointer"
             >
               Add to Cart
             </button>
 
             <NavLink to="/product">
-              <button className="mt-6 px-6 py-2 bg-gray-700 hover:bg-black text-gray-200 rounded-lg shadow hover:text-white duration-200 cursor-pointer">
+              <button className="md:mt-6 px-6 py-2 bg-gray-700 hover:bg-black text-gray-200 rounded-lg shadow hover:text-white duration-200 cursor-pointer">
                 Go Back
               </button>
             </NavLink>
