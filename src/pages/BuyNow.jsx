@@ -21,7 +21,7 @@ const BuyNow = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" }); // clear error on change
+    setErrors({ ...errors, [e.target.name]: "" }); // Clear error on change
   };
 
   const validate = () => {
@@ -45,19 +45,39 @@ const BuyNow = () => {
   const handleBuyNow = () => {
     if (!validate()) return;
 
+    // Prepare the order data
+    const orderDetails = {
+      orderDate: new Date().toLocaleDateString(),
+      totalAmount: total,
+      items: cart, // Items in the cart
+      userDetails: form, // User's info
+    };
+
+    // Get existing orders from localStorage
+    const existingOrders =
+      JSON.parse(localStorage.getItem("orderHistory")) || [];
+
+    // Add the new order to the list of orders
+    existingOrders.push(orderDetails);
+
+    // Save the updated orders back to localStorage
+    localStorage.setItem("orderHistory", JSON.stringify(existingOrders));
+
+    // Clear the cart
     dispatch(clearCart());
 
+    // Show success message
     alert("Order placed successfully!");
-    console.log("Order Details:", { ...form });
 
-    navigate("/");
+    // Redirect to the My Orders page
+    navigate("/myorder");
   };
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl text-center font-bold mb-6">Buy Now</h1>
+      <h1 className="text-3xl font-bold mb-6">Buy Now</h1>
 
       {/* Product Details */}
       <div className="bg-white shadow rounded-lg p-6 mb-6">
@@ -93,7 +113,7 @@ const BuyNow = () => {
       {/* User Info */}
       <div className="bg-white shadow rounded-lg p-6 mb-6">
         <h2 className="text-xl font-semibold mb-4">Your Details</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <input
               name="fullName"
